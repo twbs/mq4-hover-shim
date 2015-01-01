@@ -48,7 +48,7 @@ Legend:
 * False negative - Browser supports real hovering, and mq4-hover-hover-shim reports that it does NOT support real hovering
 * False positive - Browser does NOT supports real hovering, and mq4-hover-hover-shim reports that it supports real hovering
 * ??? - This case has yet to be tested.
-* Desktop - has a pointing device that supports true hovering (e.g. mouse, trackpad, joystick); lacks a touch-based pointing input device
+* Desktop - has a pointing device that supports true hovering (e.g. mouse, trackball, trackpad, joystick, http://xkcd.com/243/); lacks a touch-based pointing input device
 * [Laplet](http://en.wikipedia.org/wiki/Laplet) - has both a pointing device that supports true hovering and a touch-based pointing input device
 * Mobile - has a touch-based pointing input device (e.g. touchscreen); lacks a pointing device that supports true hovering
 
