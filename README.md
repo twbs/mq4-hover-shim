@@ -49,7 +49,9 @@ Legend:
 * ??? - This case has yet to be tested.
 
 Officially supported:
-* Blink (Chrome & recent Opera) - **False negative due to [Chromium bug #441613](http://crbug.com/441613)**
+* Blink (Chrome & recent Opera)
+  * Desktop - **False negative due to [Chromium bug #441613](http://crbug.com/441613)**
+  * Android - True negative
 * Firefox (latest stable version)
   * Desktop - True positive
   * Android - ???
