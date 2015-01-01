@@ -39,7 +39,7 @@ if (mq4HoverShim.supportsTrueHover()) {
 
 ## Browser compatibility
 
-The following is a summary of the results of testing the library in various browsers.
+The following is a summary of the results of testing the library in various browsers. [Try out the Live Testcase](http://jsfiddle.net/cvrhulu/5vszkpmg/).
 
 Legend:
 * True positive - Browser supports real hovering, and mq4-hover-hover-shim reports that it supports real hovering
