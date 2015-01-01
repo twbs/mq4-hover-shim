@@ -54,7 +54,7 @@ Officially supported:
   * Android - True negative
 * Firefox (latest stable version)
   * Desktop - True positive
-  * Android - ???
+  * Android - True negative
 * Android browser
   * Android 5.0 - True negative
   * Android 4.0 - True negative
