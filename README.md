@@ -13,7 +13,7 @@ However, since it's from a relatively recent Working Draft, the `hover` media fe
 NOTE: This shim only adds support for the `hover` value of the `hover` media feature. So you can only tell the difference between "truly supports hovering" (the `hover` value)" and "does not truly support hovering" (the `none` or `on-demand` values).
 
 The shim consists of two parts:
-* A server-side CSS postprocessor that rewrites
+* A [PostCSS](https://github.com/postcss/postcss)-based server-side CSS postprocessor that rewrites
 ```css
 @media (hover: hover) {
     some-selector {
@@ -76,6 +76,9 @@ Unofficially supported:
 
 ## API
 (To-Be-Documented)
+
+## Grunt
+Use [grunt-postcss](https://github.com/nDmitry/grunt-postcss) to invoke the mq4-hover-hover-shim CSS postprocessor via [Grunt](http://gruntjs.com/) task.
 
 ## Contributing
 The project's coding style is laid out in the JSHint, ESLint, and JSCS configurations. Add unit tests when changing the CSS postprocessor. Lint and test your code using [Grunt](http://gruntjs.com/). Manually test any changes to the browser-side portion of the shim.
