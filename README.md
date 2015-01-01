@@ -65,6 +65,8 @@ Officially supported:
     * 10 - True positive
     * 9 - True positive
     * 8 - True positive
+  * Touchscreen with mouse (like the MS Surface Pro)
+    * 11 - Arguable true negative
   * Mobile 11
     * Mobile mode - ???
     * Desktop mode - ???
@@ -90,6 +92,7 @@ The module exports one public function:
   * Return type: `boolean`
   * Returns a `boolean` value indicating if the browser's primary pointer supports true hovering or if the browser at least does not try to quirkily emulate hovering, such that [`:hover`](hover-pseudo) CSS styles are appropriate.
   * In other words, returns `true` if `@media (hover: hover)` would evaluate to `true` were the browser to natively correctly implement Media Queries Level 4; otherwise, returns `false`.
+  * If the browser does not natively support the `hover` media feature, but does support touch via some pointer input device, then we define this touch-based pointer to be the "primary pointer". Hence, if said browser has multiple pointer input devices, one supporting touch and another supporting true hovering (e.g. the computer has both a mouse and a touchscreen), this function will return `false`, since the user could use the touch input device at any time and since `:hover` should only be used for progressive enhancement anyway.
 
 ## Grunt
 Use [grunt-postcss](https://github.com/nDmitry/grunt-postcss) to invoke the mq4-hover-hover-shim CSS postprocessor via [Grunt](http://gruntjs.com/) task.
