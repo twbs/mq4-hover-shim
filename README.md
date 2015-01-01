@@ -34,6 +34,7 @@ if (mq4HoverShim.supportsTrueHover()) {
     document.documentElement.className += ' some-special-class';
 }
 ```
+Obviously, this requires JavaScript to be enabled in the browser, and would default to disabling `:hover` styles when JavaScript is disabled.
 
 [hover-pseudo]: https://developer.mozilla.org/en-US/docs/Web/CSS/:hover
 
