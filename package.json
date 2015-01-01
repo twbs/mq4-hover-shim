@@ -1,0 +1,56 @@
+{
+  "name": "mq4-hover-hover-shim",
+  "version": "0.0.1",
+  "description": "A shim for the Media Queries Level 4 `hover` @media feature",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cvrebert/mq4-hover-hover-shim.git"
+  },
+  "keywords": [
+    "media",
+    "query",
+    "queries",
+    "feature",
+    "features",
+    "MQ4",
+    "css",
+    "shim",
+    "polyfill",
+    "hover"
+  ],
+  "author": {
+    "name": "Chris Rebert",
+    "email": "code@rebertia.com",
+    "url": "http://chrisrebert.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cvrebert/mq4-hover-hover-shim/issues"
+  },
+  "homepage": "https://github.com/cvrebert/mq4-hover-hover-shim",
+  "dependencies": {
+    "css-mediaquery": "^0.1.2",
+    "postcss": "^4.0.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-6to5": "^2.0.0",
+    "grunt-browserify": "^3.2.1",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-nodeunit": "^0.4.1",
+    "grunt-eslint": "^3.0.0",
+    "grunt-jscs": "^1.0.0",
+    "jscs-jsdoc": "^0.4.0",
+    "load-grunt-tasks": "^2.0.0",
+    "time-grunt": "^1.0.0"
+  },
+  "main": "src/nodejs/postprocessor.js",
+  "files": [
+    "dist",
+    "src",
+    "LICENSE.txt"
+  ]
+}
