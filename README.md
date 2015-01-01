@@ -75,7 +75,18 @@ Unofficially supported:
 * Internet Explorer Mobile 9 - ???
 
 ## API
-(To-Be-Documented)
+### CSS postprocessor
+The module itself is a [PostCSS](https://github.com/postcss/postcss) processor object (that was returned from a call to the `postcss()` function). It requires that a `hoverSelectorPrefix` string option be provided. This string will be prepended to all selectors within `@media (hover: hover) {...}` blocks within the source CSS. It transforms the source CSS as described above.
+
+### Browser-side feature detector
+When used in a non-AMD non-CommonJS context, the module exports itself as a `mq4HoverShim` property on the global `window` object.
+The module exports one public function:
+* `supportsTrueHover()`
+  * Arguments: none
+  * Side-effects: none
+  * Return type: `boolean`
+  * Returns a `boolean` value indicating if the browser's primary pointer supports true hovering or if the browser at least does not try to quirkily emulate hovering, such that [`:hover`](hover-pseudo) CSS styles are appropriate.
+  * In other words, returns `true` if `@media (hover: hover)` would evaluate to `true` were the browser to natively correctly implement Media Queries Level 4; otherwise, returns `false`.
 
 ## Grunt
 Use [grunt-postcss](https://github.com/nDmitry/grunt-postcss) to invoke the mq4-hover-hover-shim CSS postprocessor via [Grunt](http://gruntjs.com/) task.
