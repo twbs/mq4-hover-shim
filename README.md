@@ -48,34 +48,40 @@ Legend:
 * False negative - Browser supports real hovering, and mq4-hover-hover-shim reports that it does NOT support real hovering
 * False positive - Browser does NOT supports real hovering, and mq4-hover-hover-shim reports that it supports real hovering
 * ??? - This case has yet to be tested.
+* Desktop - has a pointing device that supports true hovering (e.g. mouse, trackpad, joystick); lacks a touch-based pointing input device
+* [Laplet](http://en.wikipedia.org/wiki/Laplet) - has both a pointing device that supports true hovering and a touch-based pointing input device
+* Mobile - has a touch-based pointing input device (e.g. touchscreen); lacks a pointing device that supports true hovering
 
 Officially supported:
 * Blink (Chrome & recent Opera)
   * Desktop - **False negative due to [Chromium bug #441613](http://crbug.com/441613)**
-  * Android - True negative
+  * Laplet - ??? (Arguable true negative presumed)
+  * Mobile (Android) - True negative
 * Firefox
   * Desktop - True positive
-  * Android - True negative
+  * Laplet - ??? (Arguable true negative presumed)
+  * Mobile (Android) - True negative
 * Android browser
-  * Android 5.0 - True negative
-  * Android 4.0 - True negative
+  * Mobile (Android 4.0/5.0) - True negative
+  * Laplet (Android 4.0/5.0) - ??? (Arguable true negative presumed)
 * Internet Explorer
   * Desktop
     * 11 - True positive
     * 10 - True positive
     * 9 - True positive
     * 8 - True positive
-  * Touchscreen with mouse (like the MS Surface Pro)
+  * Laplet
     * 11 - Arguable true negative
-  * Mobile 11
-    * Mobile mode - ???
-    * Desktop mode - ???
+  * Mobile 
+    * 11
+      * in mobile mode - ???
+      * in desktop mode - ???
 * Safari (WebKit)
-  * iOS 8.1 - True negative
-  * 8 on OS X - True positive
+  * Desktop (Safari 8 on OS X) - True positive
+  * Mobile (iOS 8.1) - True negative
 
 Unofficially supported:
-* Presto (old Opera 12) desktop - True positive
+* Presto (old Opera 12) Desktop - True positive
 * Internet Explorer Mobile 10 - ???
 * Internet Explorer Mobile 9 - ???
 
@@ -92,7 +98,7 @@ The module exports one public function:
   * Return type: `boolean`
   * Returns a `boolean` value indicating if the browser's primary pointer supports true hovering or if the browser at least does not try to quirkily emulate hovering, such that [`:hover`](hover-pseudo) CSS styles are appropriate.
   * In other words, returns `true` if `@media (hover: hover)` would evaluate to `true` were the browser to natively correctly implement Media Queries Level 4; otherwise, returns `false`.
-  * If the browser does not natively support the `hover` media feature, but does support touch via some pointer input device, then we define this touch-based pointer to be the "primary pointer". Hence, if said browser has multiple pointer input devices, one supporting touch and another supporting true hovering (e.g. the computer has both a mouse and a touchscreen), this function will return `false`, since the user could use the touch input device at any time and since `:hover` should only be used for progressive enhancement anyway.
+  * If the browser does not natively support the `hover` media feature, but does support touch via some pointing input device, then we define this touch-based pointer to be the "primary pointer". Hence, if said browser has multiple pointing input devices, one supporting touch and another supporting true hovering (e.g. the computer has both a mouse and a touchscreen), this function will return `false`, since the user could use the touch input device at any time and since `:hover` should only be used for progressive enhancement anyway.
 
 ## Grunt
 Use [grunt-postcss](https://github.com/nDmitry/grunt-postcss) to invoke the mq4-hover-hover-shim CSS postprocessor via [Grunt](http://gruntjs.com/) task.
