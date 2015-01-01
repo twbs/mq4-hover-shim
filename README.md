@@ -52,7 +52,7 @@ Officially supported:
 * Blink (Chrome & recent Opera)
   * Desktop - **False negative due to [Chromium bug #441613](http://crbug.com/441613)**
   * Android - True negative
-* Firefox (latest stable version)
+* Firefox
   * Desktop - True positive
   * Android - True negative
 * Android browser
