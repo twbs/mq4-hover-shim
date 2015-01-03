@@ -54,7 +54,7 @@ Legend:
 
 Officially supported:
 * Blink (Chrome & recent Opera)
-  * Desktop - **False negative due to [Chromium bug #441613](http://crbug.com/441613)**
+  * Desktop - True positive in Chrome >=41; False negative in Chrome <41 due to [Chromium bug #441613](http://crbug.com/441613)
   * Laplet - ??? (Arguable true negative presumed)
   * Mobile (Android) - True negative
 * Firefox
