@@ -72,12 +72,9 @@ module.exports = function (grunt) {
             gruntfile: {
                 src: '<%= jshint.gruntfile.src %>'
             },
-            /*
-            // grunt-eslint doesn't support ES6
-            // (ES6 support is currently experimental in ESLint itself)
             lib: {
-                src: '<%= jshint.lib.src %>'
-            },*/
+                src: ['src/**/*.js', '!src/browser/**/*.js']
+            },
             test: {
                 src: '<%= jshint.test.src %>'
             }
