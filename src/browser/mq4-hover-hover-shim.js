@@ -63,7 +63,6 @@ export function supportsTrueHover() {
     }
 
     // OPEN ISSUE: Should we look for IE's "Touch" userAgent token?
-    // OPEN ISSUE: IE10 Mobile?
 
     // UA's pointer is non-touch and thus likely either supports true hovering or at least does not try to emulate it.
     return true;
