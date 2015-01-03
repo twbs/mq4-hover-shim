@@ -12,13 +12,13 @@ export function supportsTrueHover() {
     if (!window.matchMedia) {
         // Ancient non-IE, or IE<=9, per http://caniuse.com/#feat=matchmedia
         var ua = navigator.userAgent;
-        var isIE9mobileInMobileMode = ua.indexOf('MSIE 9.0') > -1 && (ua.indexOf('XBLWP7') > -1 || ua.indexOf('ZuneWP7') > -1);
-        if (isIE9mobileInMobileMode) {
-            // FIXME: IE9 Mobile in Mobile mode; force hoverEnabled to false???
-            return false;
-        }
+        var isIEmobile = (
+            ua.indexOf('IEMobile') > -1 || ua.indexOf('Windows Phone') > -1 ||
+            ua.indexOf('XBLWP7') > -1 || ua.indexOf('ZuneWP7') > -1 || // IE Mobile 9 in desktop view
+            ua.indexOf('Windows CE') > -1 // out of an abundance of caution
+        );
         // UA is ancient enough to probably be a desktop computer or at least not attempt emulation of hover.
-        return true;
+        return !isIEmobile;
     }
 
     // CSSWG Media Queries Level 4 draft
