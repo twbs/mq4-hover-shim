@@ -13,11 +13,16 @@ exports.supportsTrueHover = supportsTrueHover;
 */
 function supportsTrueHover() {
   if (!window.matchMedia) {
-    // Ancient non-IE, or IE<=9, per http://caniuse.com/#feat=matchmedia
+    // Opera Mini, IE<=9, or ancient; per http://caniuse.com/#feat=matchmedia
     var ua = navigator.userAgent;
-    var isIE9mobileInMobileMode = ua.indexOf("MSIE 9.0") > -1 && (ua.indexOf("XBLWP7") > -1 || ua.indexOf("ZuneWP7") > -1);
-    if (isIE9mobileInMobileMode) {
-      // FIXME: IE9 Mobile in Mobile mode; force hoverEnabled to false???
+    if (ua.indexOf("Opera Mini") > -1) {
+      // Opera Mini doesn't support true hovering
+      return false;
+    }
+    if (ua.indexOf("IEMobile") > -1 || ua.indexOf("Windows Phone") > -1 || ua.indexOf("XBLWP7") > -1 || ua.indexOf("ZuneWP7") > -1 || // IE Mobile 9 in desktop view
+    ua.indexOf("Windows CE") > -1 // out of an abundance of caution
+    ) {
+      // IE Mobile <=9
       return false;
     }
     // UA is ancient enough to probably be a desktop computer or at least not attempt emulation of hover.
@@ -26,7 +31,6 @@ function supportsTrueHover() {
 
   // CSSWG Media Queries Level 4 draft
   //     http://drafts.csswg.org/mediaqueries/#hover
-  // FIXME: WTF Chrome...: https://code.google.com/p/chromium/issues/detail?id=441613
   if (window.matchMedia("(hover: none),(-moz-hover: none),(-ms-hover: none),(-webkit-hover: none)," + "(hover: on-demand),(-moz-hover: on-demand),(-ms-hover: on-demand),(-webkit-hover: on-demand)").matches) {
     // true hovering explicitly not supported by primary pointer
     return false;
@@ -61,9 +65,6 @@ function supportsTrueHover() {
   if ("ontouchstart" in window) {
     return false;
   }
-
-  // OPEN ISSUE: Should we look for IE's "Touch" userAgent token?
-  // OPEN ISSUE: IE10 Mobile?
 
   // UA's pointer is non-touch and thus likely either supports true hovering or at least does not try to emulate it.
   return true;
