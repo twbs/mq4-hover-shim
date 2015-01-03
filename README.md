@@ -88,8 +88,13 @@ Unofficially supported:
 * Internet Explorer Mobile <=10 - ??? (Theoretically: True negative)
 
 ## API
-### CSS postprocessor
-The module itself is a [PostCSS](https://github.com/postcss/postcss) processor object (that was returned from a call to the `postcss()` function). It requires that a `hoverSelectorPrefix` string option be provided. This string will be prepended to all selectors within `@media (hover: hover) {...}` blocks within the source CSS. It transforms the source CSS as described above.
+### Node.js module; CSS postprocessor
+The npm module has the following properties:
+* `postprocessor` - CSS postprocessor that transforms the source CSS as described above. A [PostCSS](https://github.com/postcss/postcss) processor object (that was returned from a call to the `postcss()` function). It requires that a `hoverSelectorPrefix` string option be provided; this string will be prepended to all selectors within `@media (hover: hover) {...}` blocks within the source CSS.
+* `featureDetector` - Each of this object's properties is a string filepath to a JavaScript file containing the browser-side feature detector in a particular JavaScript module format.
+  * `es6` - [ECMAScript 6 module](http://www.2ality.com/2014/09/es6-modules-final.html) format (this is the original from which the other versions are generated)
+  * `cjs` - [CommonJS](http://wiki.commonjs.org/wiki/Modules/1.1) module format
+  * `umdGlobal` - "enhanced" [UMD](https://github.com/umdjs/umd) module format; exports a `window.mq4HoverShim` global if the JS environment has no module system (e.g. if included directly via `<script>` in current browsers); (generated via Browserify's `standalone` option)
 
 ### Browser-side feature detector
 When used in a non-AMD non-CommonJS context, the module exports itself as a `mq4HoverShim` property on the global `window` object.

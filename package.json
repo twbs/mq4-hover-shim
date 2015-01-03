@@ -47,7 +47,7 @@
     "load-grunt-tasks": "^2.0.0",
     "time-grunt": "^1.0.0"
   },
-  "main": "src/nodejs/postprocessor.js",
+  "main": "src/nodejs/index.js",
   "files": [
     "dist",
     "src",
