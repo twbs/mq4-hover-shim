@@ -23,7 +23,6 @@ export function supportsTrueHover() {
 
     // CSSWG Media Queries Level 4 draft
     //     http://drafts.csswg.org/mediaqueries/#hover
-    // FIXME: WTF Chrome...: https://code.google.com/p/chromium/issues/detail?id=441613
     if (window.matchMedia(
             '(hover: none),(-moz-hover: none),(-ms-hover: none),(-webkit-hover: none),' +
             '(hover: on-demand),(-moz-hover: on-demand),(-ms-hover: on-demand),(-webkit-hover: on-demand)'
