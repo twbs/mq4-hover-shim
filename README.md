@@ -83,10 +83,9 @@ Officially supported:
 Unofficially supported:
 * Presto
   * Desktop (old Opera 12.1) - True positive
-  * Mobile (Opera Mini) - ???
+  * Mobile (Opera Mini) - ??? (Theoretically: True negative)
   * Mobile (Opera Mobile) - ??? (Theoretically: True negative)
-* Internet Explorer Mobile 10 - ???
-* Internet Explorer Mobile 9 - ???
+* Internet Explorer Mobile <=10 - ??? (Theoretically: True negative)
 
 ## API
 ### CSS postprocessor
