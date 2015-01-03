@@ -81,7 +81,10 @@ Officially supported:
   * Mobile (iOS 8.1) - True negative
 
 Unofficially supported:
-* Presto (old Opera 12) Desktop - True positive
+* Presto
+  * Desktop (old Opera 12.1) - True positive
+  * Mobile (Opera Mini) - ???
+  * Mobile (Opera Mobile) - ??? (Theoretically: True negative)
 * Internet Explorer Mobile 10 - ???
 * Internet Explorer Mobile 9 - ???
 
