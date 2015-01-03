@@ -72,10 +72,10 @@ Officially supported:
     * 8 - True positive
   * Laplet
     * 11 - Arguable true negative
-  * Mobile 
+  * Mobile (Windows Phone 8.1)
     * 11
-      * in mobile mode - ???
-      * in desktop mode - ???
+      * in mobile mode - True negative
+      * in desktop mode - True negative
 * Safari (WebKit)
   * Desktop (Safari 8 on OS X) - True positive
   * Mobile (iOS 8.1) - True negative
