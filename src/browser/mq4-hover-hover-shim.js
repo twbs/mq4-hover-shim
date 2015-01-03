@@ -10,15 +10,22 @@
 */
 export function supportsTrueHover() {
     if (!window.matchMedia) {
-        // Ancient non-IE, or IE<=9, per http://caniuse.com/#feat=matchmedia
+        // Opera Mini, IE<=9, or ancient; per http://caniuse.com/#feat=matchmedia
         var ua = navigator.userAgent;
-        var isIEmobile = (
+        if (ua.indexOf("Opera Mini") > -1) {
+            // Opera Mini doesn't support true hovering
+            return false;
+        }
+        if (
             ua.indexOf('IEMobile') > -1 || ua.indexOf('Windows Phone') > -1 ||
             ua.indexOf('XBLWP7') > -1 || ua.indexOf('ZuneWP7') > -1 || // IE Mobile 9 in desktop view
             ua.indexOf('Windows CE') > -1 // out of an abundance of caution
-        );
+        ) {
+            // IE Mobile <=9
+            return false;
+        }
         // UA is ancient enough to probably be a desktop computer or at least not attempt emulation of hover.
-        return !isIEmobile;
+        return true;
     }
 
     // CSSWG Media Queries Level 4 draft
