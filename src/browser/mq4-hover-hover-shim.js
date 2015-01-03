@@ -61,8 +61,6 @@ export function supportsTrueHover() {
         return false;
     }
 
-    // OPEN ISSUE: Should we look for IE's "Touch" userAgent token?
-
     // UA's pointer is non-touch and thus likely either supports true hovering or at least does not try to emulate it.
     return true;
 }
