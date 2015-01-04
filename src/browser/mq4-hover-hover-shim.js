@@ -11,7 +11,7 @@
 export function supportsTrueHover() {
     if (!window.matchMedia) {
         // Opera Mini, IE<=9, or ancient; per http://caniuse.com/#feat=matchmedia
-        var ua = navigator.userAgent;
+        const ua = navigator.userAgent;
         if (ua.indexOf("Opera Mini") > -1) {
             // Opera Mini doesn't support true hovering
             return false;
@@ -50,9 +50,9 @@ export function supportsTrueHover() {
     // W3C Pointer Events LC WD, 13 November 2014
     //     http://www.w3.org/TR/2014/WD-pointerevents-20141113/
     // Prefixed in IE10, per http://caniuse.com/#feat=pointer
-    var supportsPointerEvents = window.PointerEvent || window.MSPointerEvent;
+    const supportsPointerEvents = window.PointerEvent || window.MSPointerEvent;
     if (supportsPointerEvents) {
-        var pointerEventsIsTouch = (window.navigator.maxTouchPoints || window.navigator.msMaxTouchPoints) > 0;
+        const pointerEventsIsTouch = (window.navigator.maxTouchPoints || window.navigator.msMaxTouchPoints) > 0;
         return !pointerEventsIsTouch;
     }
 
