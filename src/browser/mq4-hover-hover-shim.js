@@ -1,6 +1,8 @@
 /*eslint-env browser */
 /* jshint browser: true, esnext: true */
 
+import * as $ from 'jquery';
+
 /**
 * Does this UA's primary pointer support true hovering
 * OR does the UA at least not try to quirkily emulate hovering,

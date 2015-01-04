@@ -32,7 +32,8 @@ module.exports = function (grunt) {
             options: {
                 banner: '<%= banner %>',
                 browserifyOptions: {
-                    standalone: 'mq4HoverShim'
+                    standalone: 'mq4HoverShim',
+                    bundleExternal: false
                 }
             },
             dist: {
