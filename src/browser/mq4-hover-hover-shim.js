@@ -10,22 +10,19 @@
 */
 export function supportsTrueHover() {
     if (!window.matchMedia) {
-        // Opera Mini, IE<=9, or ancient; per http://caniuse.com/#feat=matchmedia
-        const ua = navigator.userAgent;
-        if (ua.indexOf("Opera Mini") > -1) {
-            // Opera Mini doesn't support true hovering
-            return false;
-        }
-        if (
-            ua.indexOf('IEMobile') > -1 || ua.indexOf('Windows Phone') > -1 ||
-            ua.indexOf('XBLWP7') > -1 || ua.indexOf('ZuneWP7') > -1 || // IE Mobile 9 in desktop view
-            ua.indexOf('Windows CE') > -1 // out of an abundance of caution
-        ) {
-            // IE Mobile <=9
-            return false;
-        }
-        // UA is ancient enough to probably be a desktop computer or at least not attempt emulation of hover.
-        return true;
+        // Opera Mini, IE<=9, ancient, or obscure; per http://caniuse.com/#feat=matchmedia
+
+        // Opera Mini and IE Mobile don't support true hovering, so they're what we'll check for.
+        // Other browsers are either:
+        // (a) obscure
+        // (b) touch-based but old enough not to attempt to emulate hovering
+        // (c) old desktop browsers that do support true hovering
+
+        // Explanation of this UA regex:
+        // IE Mobile <9 seems to always have "Windows CE", "Windows Phone", or "IEMobile" in its UA string.
+        // IE Mobile 9 in desktop view doesn't include "IEMobile" or "Windows Phone" in the UA string,
+        // but it instead includes "XBLWP7" and/or "ZuneWP7".
+        return !/Opera Mini|IEMobile|Windows (Phone|CE)|(XBL|Zune)WP7/.test(navigator.userAgent);
     }
 
     // CSSWG Media Queries Level 4 draft
