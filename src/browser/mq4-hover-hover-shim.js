@@ -1,16 +1,37 @@
 /*eslint-env browser */
 /* jshint browser: true, esnext: true */
+/* jshint -W080 */
+/**
+* @module mq4HoverShim
+* @requires jquery
+*/
+let $ = (function () {
+    try {
+        import * as jQuery from 'jquery';
+        return jQuery;
+    }
+    catch (importErr) {
+        const globaljQuery = window.$ || window.jQuery || window.Zepto;
+        if (!globaljQuery) {
+            throw new Error('mq4HoverShim needs jQuery (or similar)');
+        }
+        return globaljQuery;
+    }
+})();
 
-import * as $ from 'jquery';
+/** @type {boolean|undefined} */
+let canTrulyHover = undefined;
 
 /**
-* Does this UA's primary pointer support true hovering
-* OR does the UA at least not try to quirkily emulate hovering,
-* such that :hover CSS styles are appropriate?
-* Essentially tries to shim the `@media (hover: hover)` CSS media query feature.
-* @type {boolean}
+* @private
+* @fires mq4HoverShim#mq4hsChange
 */
-export function supportsTrueHover() {
+function triggerEvent() {
+    $(document).trigger($.Event('mq4hsChange', {bubbles: false, trueHover: canTrulyHover}));
+}
+
+// IIFE so we can use `return`s to avoid deeply-nested if-s
+(function () {
     if (!window.matchMedia) {
         // Opera Mini, IE<=9, Android<=2.3, ancient, or obscure; per http://caniuse.com/#feat=matchmedia
 
@@ -24,49 +45,84 @@ export function supportsTrueHover() {
         // IE Mobile <9 seems to always have "Windows CE", "Windows Phone", or "IEMobile" in its UA string.
         // IE Mobile 9 in desktop view doesn't include "IEMobile" or "Windows Phone" in the UA string,
         // but it instead includes "XBLWP7" and/or "ZuneWP7".
-        return !/Opera Mini|Android|IEMobile|Windows (Phone|CE)|(XBL|Zune)WP7/.test(navigator.userAgent);
+        canTrulyHover = !/Opera Mini|Android|IEMobile|Windows (Phone|CE)|(XBL|Zune)WP7/.test(navigator.userAgent);
+
+        // Since there won't be any event handlers to fire our events, do the one-and-only firing of it here and now.
+        triggerEvent();
+        return;
     }
 
     // CSSWG Media Queries Level 4 draft
     //     http://drafts.csswg.org/mediaqueries/#hover
-    if (window.matchMedia(
-            '(hover: none),(-moz-hover: none),(-ms-hover: none),(-webkit-hover: none),' +
-            '(hover: on-demand),(-moz-hover: on-demand),(-ms-hover: on-demand),(-webkit-hover: on-demand)'
-    ).matches) {
-        // true hovering explicitly not supported by primary pointer
-        return false;
+    const HOVER_NONE = '(hover: none),(-moz-hover: none),(-ms-hover: none),(-webkit-hover: none)';
+    const HOVER_ON_DEMAND = '(hover: on-demand),(-moz-hover: on-demand),(-ms-hover: on-demand),(-webkit-hover: on-demand)';
+    const HOVER_HOVER = '(hover: hover),(-moz-hover: hover),(-ms-hover: hover),(-webkit-hover: hover)';
+    if (window.matchMedia(`${HOVER_NONE},${HOVER_ON_DEMAND},${HOVER_HOVER}`).matches) {
+        // Browser understands the `hover` media feature
+        const hoverCallback = function (mql) {
+            const doesMatch = mql.matches;
+            if (doesMatch !== canTrulyHover) {
+                canTrulyHover = doesMatch;
+                triggerEvent();
+            }
+        };
+        const atHoverQuery = window.matchMedia(HOVER_HOVER);
+        atHoverQuery.addListener(hoverCallback);
+        hoverCallback(atHoverQuery);
+        return;
     }
-    if (window.matchMedia('(hover: hover),(-moz-hover: hover),(-ms-hover: hover),(-webkit-hover: hover)').matches) {
-        // true hovering explicitly supported by primary pointer
-        return true;
-    }
-    // `hover` media feature not implemented by this browser; keep probing
 
+    // Check for touch support instead.
     // Touch generally implies that hovering is merely emulated,
     // which doesn't count as true hovering support for our purposes
     // due to the quirkiness of the emulation (e.g. :hover being sticky).
 
-    // W3C Pointer Events LC WD, 13 November 2014
-    //     http://www.w3.org/TR/2014/WD-pointerevents-20141113/
+    // W3C Pointer Events PR, 16 December 2014
+    //     http://www.w3.org/TR/2014/PR-pointerevents-20141216/
     // Prefixed in IE10, per http://caniuse.com/#feat=pointer
-    const supportsPointerEvents = window.PointerEvent || window.MSPointerEvent;
-    if (supportsPointerEvents) {
-        const pointerEventsIsTouch = (window.navigator.maxTouchPoints || window.navigator.msMaxTouchPoints) > 0;
-        return !pointerEventsIsTouch;
+    if (window.PointerEvent || window.MSPointerEvent) {
+        // Browser supports Pointer Events
+
+        // Browser supports touch if it has touch points
+        /* jshint -W018 */
+        canTrulyHover = !((window.navigator.maxTouchPoints || window.navigator.msMaxTouchPoints) > 0);
+        /* jshint +W018 */
+        triggerEvent();
+        return;
     }
 
     // Mozilla's -moz-touch-enabled
     //     https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries#-moz-touch-enabled
-    if (window.matchMedia('(touch-enabled),(-moz-touch-enabled),(-ms-touch-enabled),(-webkit-touch-enabled)').matches) {
-        return false;
+    const touchEnabledQuery = window.matchMedia('(touch-enabled),(-moz-touch-enabled),(-ms-touch-enabled),(-webkit-touch-enabled)');
+    if (touchEnabledQuery.matches) {
+        canTrulyHover = false;
+        triggerEvent();
+        return;
     }
 
-    // W3C Touch Events
+    // W3C Touch Events REC, 10 October 2013
     //     http://www.w3.org/TR/2013/REC-touch-events-20131010/
     if ('ontouchstart' in window) {
-        return false;
+        canTrulyHover = false;
+        triggerEvent();
+        return;
     }
 
     // UA's pointer is non-touch and thus likely either supports true hovering or at least does not try to emulate it.
-    return true;
+    canTrulyHover = true;
+    triggerEvent();
+})();
+
+
+/**
+* Does this UA's primary pointer support true hovering
+* OR does the UA at least not try to quirkily emulate hovering,
+* such that :hover CSS styles are appropriate?
+* Essentially tries to shim the `@media (hover: hover)` CSS media query feature.
+* @public
+* @returns {boolean}
+* @since 0.0.1
+*/
+export function supportsTrueHover() {
+    return canTrulyHover;
 }
