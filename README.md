@@ -28,11 +28,11 @@ some-prefix some-selector {
 }
 ```
 (In normal use-cases, `some-selector` will contain the `:hover` pseudo-class and `some-prefix` will be a specially-named CSS class that will typically be added to the `<html>` element.)
-* A client-side JavaScript library that detects whether the user-agent truly supports hovering. If the check returns true, then your code can add the special CSS class to the appropriate element to enable [`:hover`](hover-pseudo) styles; for example:
+* A client-side JavaScript library that detects whether the user-agent truly supports hovering. When the check returns true, then your code can add the special CSS class to the appropriate element to enable [`:hover`](hover-pseudo) styles; for example:
 ```js
-if (mq4HoverShim.supportsTrueHover()) {
-    document.documentElement.className += ' some-special-class';
-}
+$(document).on('mq4hsChange', function (e) {
+    $(document.documentElement).toggleClass('some-special-class', e.trueHover);
+});
 ```
 Obviously, this requires JavaScript to be enabled in the browser, and would default to disabling `:hover` styles when JavaScript is disabled.
 
