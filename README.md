@@ -118,7 +118,7 @@ The module has one public event:
     * This event isn't fired merely if a different pointer becomes the primary pointer. The new primary pointer must also differ from the old primary pointer in its support for true hovering. For example, switching from one mouse to another mouse, or from one touchscreen to another touchscreen won't cause this event to fire.
   * Target: the `document` object
   * Extra properties:
-    * `canTrulyHover`
+    * `trueHover`
       * Type: `boolean`
       * Value: Same as `supportsTrueHover()`'s return value at the time of firing the event
 
