@@ -32,7 +32,8 @@ module.exports = function (grunt) {
             options: {
                 banner: '<%= banner %>',
                 browserifyOptions: {
-                    standalone: 'mq4HoverShim'
+                    standalone: 'mq4HoverShim',
+                    bundleExternal: false
                 }
             },
             dist: {
@@ -59,7 +60,7 @@ module.exports = function (grunt) {
                 src: '<%= jshint.gruntfile.src %>'
             },
             lib: {
-                src: '<%= jshint.lib.src %>'
+                src: ['src/**/*.js', '!src/browser/mq4-hover-hover-shim.js']
             },
             test: {
                 src: '<%= jshint.test.src %>'

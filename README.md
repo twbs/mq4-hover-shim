@@ -38,6 +38,10 @@ Obviously, this requires JavaScript to be enabled in the browser, and would defa
 
 [hover-pseudo]: https://developer.mozilla.org/en-US/docs/Web/CSS/:hover
 
+## Client-side dependencies
+
+The browser-side portion of the shim depends on jQuery for firing events. Pull requests to add support for other browser event libraries would be welcomed.
+
 ## Browser compatibility
 
 The following is a summary of the results of testing the library in various browsers. [Try out the Live Testcase](http://jsfiddle.net/cvrhulu/5vszkpmg/).
@@ -103,9 +107,20 @@ The module exports one public function:
   * Arguments: none
   * Side-effects: none
   * Return type: `boolean`
-  * Returns a `boolean` value indicating if the browser's primary pointer supports true hovering or if the browser at least does not try to quirkily emulate hovering, such that [`:hover`](hover-pseudo) CSS styles are appropriate.
+  * Returns a `boolean` value indicating if the browser's primary pointer currently supports true hovering or if the browser at least does not try to quirkily emulate hovering, such that [`:hover`](hover-pseudo) CSS styles are appropriate.
   * In other words, returns `true` if `@media (hover: hover)` would evaluate to `true` were the browser to natively correctly implement Media Queries Level 4; otherwise, returns `false`.
   * If the browser does not natively support the `hover` media feature, but does support touch via some pointing input device, then we define this touch-based pointer to be the "primary pointer". Hence, if said browser has multiple pointing input devices, one supporting touch and another supporting true hovering (e.g. the computer has both a mouse and a touchscreen), this function will return `false`, since the user could use the touch input device at any time and since `:hover` should only be used for progressive enhancement anyway.
+
+The module has one public event:
+* Event name: `mq4hsChange`
+  * Fired whenever the primary pointer's support for true hovering changes.
+    * This may be due to a different pointer becoming the primary pointer, although that's not the only possible cause.
+    * This event isn't fired merely if a different pointer becomes the primary pointer. The new primary pointer must also differ from the old primary pointer in its support for true hovering. For example, switching from one mouse to another mouse, or from one touchscreen to another touchscreen won't cause this event to fire.
+  * Target: the `document` object
+  * Extra properties:
+    * `canTrulyHover`
+      * Type: `boolean`
+      * Value: Same as `supportsTrueHover()`'s return value at the time of firing the event
 
 ## Grunt
 Use [grunt-postcss](https://github.com/nDmitry/grunt-postcss) to invoke the mq4-hover-hover-shim CSS postprocessor via [Grunt](http://gruntjs.com/) task.
