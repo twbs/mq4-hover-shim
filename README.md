@@ -44,7 +44,7 @@ The browser-side portion of the shim depends on jQuery for firing events. Pull r
 
 ## Browser compatibility
 
-The following is a summary of the results of testing the library in various browsers. [Try out the Live Testcase](http://jsfiddle.net/cvrhulu/5vszkpmg/).
+The following is a summary of the results of testing the library in various browsers. [Try out the Live Testcase](http://jsbin.com/xekahi/1).
 
 Legend:
 * True positive - Browser supports real hovering, and mq4-hover-hover-shim reports that it supports real hovering
