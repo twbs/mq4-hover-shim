@@ -52,5 +52,11 @@
     "dist",
     "src",
     "LICENSE.txt"
-  ]
+  ],
+  "jspm": {
+    "dependencies": {
+      "jquery": ">=1.11.2"
+    },
+    "main": "dist/cjs/mq4-hover-hover-shim"
+  }
 }
