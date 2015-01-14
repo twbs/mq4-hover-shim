@@ -101,7 +101,12 @@ The npm module has the following properties:
   * `umdGlobal` - "enhanced" [UMD](https://github.com/umdjs/umd) module format; exports a `window.mq4HoverShim` global if the JS environment has no module system (e.g. if included directly via `<script>` in current browsers); (generated via Browserify's `standalone` option)
 
 ### Browser-side feature detector
-When used in a non-AMD non-CommonJS context, the module exports itself as a `mq4HoverShim` property on the global `window` object.
+The browser-side feature detector is available in the following module formats:
+* [ECMAScript 6](https://github.com/lukehoban/es6features#modules): [`/src/browser/mq4-hover-hover-shim.js`](https://github.com/cvrebert/mq4-hover-hover-shim/blob/master/src/browser/mq4-hover-hover-shim.js)
+* Raw [CommonJS](http://wiki.commonjs.org/wiki/Modules/1.1): [`/dist/cjs/mq4-hover-hover-shim.js`](https://github.com/cvrebert/mq4-hover-hover-shim/blob/master/dist/cjs/mq4-hover-hover-shim.js)
+* [UMD (Universal Module Definition)](https://github.com/umdjs/umd) with global fallback: [`/dist/browser/mq4-hover-hover-shim.js`](https://github.com/cvrebert/mq4-hover-hover-shim/blob/master/dist/browser/mq4-hover-hover-shim.js)
+  * When this is used in a non-AMD non-CommonJS context, the module will be exported as a `mq4HoverShim` property on the global `window` object.
+
 The module exports one public function:
 * `supportsTrueHover()`
   * Arguments: none
