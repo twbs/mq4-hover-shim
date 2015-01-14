@@ -38,6 +38,11 @@ Obviously, this requires JavaScript to be enabled in the browser, and would defa
 
 [hover-pseudo]: https://developer.mozilla.org/en-US/docs/Web/CSS/:hover
 
+## Installation
+
+* Via npm: `npm install mq4-hover-hover-shim`
+* Via jspm: `jspm install mq4-hover-hover-shim`
+
 ## Client-side dependencies
 
 The browser-side portion of the shim depends on jQuery for firing events. Pull requests to add support for other browser event libraries would be welcomed.
