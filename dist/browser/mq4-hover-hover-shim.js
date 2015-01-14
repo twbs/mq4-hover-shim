@@ -1,5 +1,5 @@
 /*!
- * mq4-hover-hover-shim v0.0.2
+ * mq4-hover-hover-shim v0.0.3
  * https://github.com/cvrebert/mq4-hover-hover-shim
  * Copyright (c) 2014 Christopher Rebert
  * Licensed under the MIT License (https://github.com/cvrebert/mq4-hover-hover-shim/blob/master/LICENSE).
