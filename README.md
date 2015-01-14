@@ -143,6 +143,7 @@ _Also, please don't edit files in the `dist` subdirectory as they are generated 
 ## Release History
 See the [GitHub Releases page](https://github.com/cvrebert/mq4-hover-hover-shim/releases) for detailed changelogs.
 * (next release) - `master`
+* 2015-01-14 - v0.0.3: Add jspm metadata. Improve docs.
 * 2015-01-09 - v0.0.2: Many improvements. jQuery is now a dependency on the client side.
 * 2014-12-31 - v0.0.1: Initial release
 
