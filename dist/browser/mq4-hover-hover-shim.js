@@ -1,5 +1,5 @@
 /*!
- * mq4-hover-hover-shim v0.0.3
+ * mq4-hover-hover-shim v0.0.4
  * https://github.com/cvrebert/mq4-hover-hover-shim
  * Copyright (c) 2014 Christopher Rebert
  * Licensed under the MIT License (https://github.com/cvrebert/mq4-hover-hover-shim/blob/master/LICENSE).
@@ -75,24 +75,18 @@ function triggerEvent() {
   var HOVER_ON_DEMAND = "(hover: on-demand),(-moz-hover: on-demand),(-ms-hover: on-demand),(-webkit-hover: on-demand)";
   var HOVER_HOVER = "(hover: hover),(-moz-hover: hover),(-ms-hover: hover),(-webkit-hover: hover)";
   if (window.matchMedia("" + HOVER_NONE + "," + HOVER_ON_DEMAND + "," + HOVER_HOVER).matches) {
-    var _ret = (function () {
-      // Browser understands the `hover` media feature
-      var hoverCallback = function (mql) {
-        var doesMatch = mql.matches;
-        if (doesMatch !== canTrulyHover) {
-          canTrulyHover = doesMatch;
-          triggerEvent();
-        }
-      };
-      var atHoverQuery = window.matchMedia(HOVER_HOVER);
-      atHoverQuery.addListener(hoverCallback);
-      hoverCallback(atHoverQuery);
-      return {
-        v: undefined
-      };
-    })();
-
-    if (typeof _ret === "object") return _ret.v;
+    // Browser understands the `hover` media feature
+    var hoverCallback = function (mql) {
+      var doesMatch = mql.matches;
+      if (doesMatch !== canTrulyHover) {
+        canTrulyHover = doesMatch;
+        triggerEvent();
+      }
+    };
+    var atHoverQuery = window.matchMedia(HOVER_HOVER);
+    atHoverQuery.addListener(hoverCallback);
+    hoverCallback(atHoverQuery);
+    return;
   }
 
   // Check for touch support instead.
