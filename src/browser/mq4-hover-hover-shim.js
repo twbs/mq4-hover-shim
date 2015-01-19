@@ -1,4 +1,5 @@
 /*eslint-env browser */
+/*eslint no-var:2*/
 /* jshint browser: true, esnext: true */
 /* jshint -W080 */
 /**
