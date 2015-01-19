@@ -68,46 +68,48 @@ function prefixSelectorsWith(rule, selectorPrefix) {
 }
 
 
-module.exports = postcss(function process(css, opts) {
-    var hoverSelectorPrefix = opts.hoverSelectorPrefix;
-    if ((typeof hoverSelectorPrefix) !== 'string') {
-        throw new Error('hoverSelectorPrefix option must be a string');
-    }
-
-    css.eachAtRule('media', function (atRule) {
-        var mediaType = mediaTypeIfSimpleHoverHover(atRule);
-        switch (mediaType) {
-            case 'all':
-                /* falls through */
-            case 'screen': {
-                atRule.eachRule(function (rule) {
-                    prefixSelectorsWith(rule, hoverSelectorPrefix);
-                });
-                if (mediaType === 'screen') {
-                    atRule.params = 'screen';
-                }
-                else {
-                    // Remove tautological @media all {...} wrapper
-                    replaceWithItsChildren(atRule);
-                }
-                return;
-            }
-
-            case 'print':
-                /* falls through */
-            case 'speech': {
-                // These media types never support hovering
-                // Delete always-false media query
-                atRule.removeSelf();
-                return;
-            }
-
-            case undefined: {
-                return; // Media query irrelevant or too complicated
-            }
-            default: {
-                return; // Deprecated media type; take no action.
-            }
+module.exports = function (opts) {
+    return postcss(function process(css) {
+        var hoverSelectorPrefix = opts.hoverSelectorPrefix;
+        if ((typeof hoverSelectorPrefix) !== 'string') {
+            throw new Error('hoverSelectorPrefix option must be a string');
         }
+
+        css.eachAtRule('media', function (atRule) {
+            var mediaType = mediaTypeIfSimpleHoverHover(atRule);
+            switch (mediaType) {
+                case 'all':
+                    /* falls through */
+                case 'screen': {
+                    atRule.eachRule(function (rule) {
+                        prefixSelectorsWith(rule, hoverSelectorPrefix);
+                    });
+                    if (mediaType === 'screen') {
+                        atRule.params = 'screen';
+                    }
+                    else {
+                        // Remove tautological @media all {...} wrapper
+                        replaceWithItsChildren(atRule);
+                    }
+                    return;
+                }
+
+                case 'print':
+                    /* falls through */
+                case 'speech': {
+                    // These media types never support hovering
+                    // Delete always-false media query
+                    atRule.removeSelf();
+                    return;
+                }
+
+                case undefined: {
+                    return; // Media query irrelevant or too complicated
+                }
+                default: {
+                    return; // Deprecated media type; take no action.
+                }
+            }
+        });
     });
-});
+};

@@ -28,7 +28,7 @@ exports.mq4HoverShim = {
     'has no effect when there are no media queries': function (test) {
         test.expect(1);
         test.deepEqual(
-            postprocessor.process(".foobar { display: none; }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process(".foobar { display: none; }").css,
             ".foobar { display: none; }"
         );
         test.done();
@@ -36,7 +36,7 @@ exports.mq4HoverShim = {
     'skips non-media at-rules': function (test) {
         test.expect(1);
         test.deepEqual(
-            postprocessor.process("@quux (hover: hover) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@quux (hover: hover) { .foobar { display: none; } }").css,
             "@quux (hover: hover) { .foobar { display: none; } }"
         );
         test.done();
@@ -44,7 +44,7 @@ exports.mq4HoverShim = {
     'skips media queries with only a media type': function (test) {
         test.expect(1);
         test.deepEqual(
-           postprocessor.process("@media screen { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+           postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media screen { .foobar { display: none; } }").css,
            "@media screen { .foobar { display: none; } }"
         );
         test.done();
@@ -52,11 +52,11 @@ exports.mq4HoverShim = {
     'skips media queries with ORs': function (test) {
         test.expect(2);
         test.deepEqual(
-            postprocessor.process("@media (hover: hover), (orientation: landscape) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media (hover: hover), (orientation: landscape) { .foobar { display: none; } }").css,
             "@media (hover: hover), (orientation: landscape) { .foobar { display: none; } }"
         );
         test.deepEqual(
-            postprocessor.process("@media screen (hover: hover), (orientation: landscape) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media screen (hover: hover), (orientation: landscape) { .foobar { display: none; } }").css,
             "@media screen (hover: hover), (orientation: landscape) { .foobar { display: none; } }"
         );
         test.done();
@@ -64,11 +64,11 @@ exports.mq4HoverShim = {
     'skips media queries with ANDs': function (test) {
         test.expect(2);
         test.deepEqual(
-            postprocessor.process("@media (hover: hover) and (orientation: landscape) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media (hover: hover) and (orientation: landscape) { .foobar { display: none; } }").css,
             "@media (hover: hover) and (orientation: landscape) { .foobar { display: none; } }"
         );
         test.deepEqual(
-            postprocessor.process("@media screen (hover: hover) and (orientation: landscape) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media screen (hover: hover) and (orientation: landscape) { .foobar { display: none; } }").css,
             "@media screen (hover: hover) and (orientation: landscape) { .foobar { display: none; } }"
         );
         test.done();
@@ -76,7 +76,7 @@ exports.mq4HoverShim = {
     'skips media queries that are not about the hover media feature': function (test) {
         test.expect(1);
         test.deepEqual(
-            postprocessor.process("@media (orientation: landscape) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media (orientation: landscape) { .foobar { display: none; } }").css,
             "@media (orientation: landscape) { .foobar { display: none; } }"
         );
         test.done();
@@ -84,11 +84,11 @@ exports.mq4HoverShim = {
     'skips media queries about the hover media feature with a non-hover value': function (test) {
         test.expect(2);
         test.deepEqual(
-            postprocessor.process("@media (hover: none) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media (hover: none) { .foobar { display: none; } }").css,
             "@media (hover: none) { .foobar { display: none; } }"
         );
         test.deepEqual(
-            postprocessor.process("@media (hover: on-demand) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media (hover: on-demand) { .foobar { display: none; } }").css,
             "@media (hover: on-demand) { .foobar { display: none; } }"
         );
         test.done();
@@ -96,7 +96,7 @@ exports.mq4HoverShim = {
     'works correctly on a representative example': function (test) {
         test.expect(1);
         test.deepEqual(
-            postprocessor.process("@media (hover: hover) { .foobar { color: white; background: red; } div .quux > input { color: blue; background: white; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media (hover: hover) { .foobar { color: white; background: red; } div .quux > input { color: blue; background: white; } }").css,
             "PREFIX>.foobar {\n    color: white;\n    background: red;\n}\nPREFIX>div .quux > input {\n    color: blue;\n    background: white;\n}"
         );
         test.done();
@@ -104,19 +104,19 @@ exports.mq4HoverShim = {
     'handles nested at-rules': function (test) {
         test.expect(4);
         test.deepEqual(
-            postprocessor.process("@media (orientation: landscape) { @media (hover: hover) { .foobar { display: none; } } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media (orientation: landscape) { @media (hover: hover) { .foobar { display: none; } } }").css,
             "@media (orientation: landscape) { PREFIX>.foobar { display: none; } }"
         );
         test.deepEqual(
-            postprocessor.process("@media screen (orientation: landscape) { @media (hover: hover) { .foobar { display: none; } } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media screen (orientation: landscape) { @media (hover: hover) { .foobar { display: none; } } }").css,
             "@media screen (orientation: landscape) { PREFIX>.foobar { display: none; } }"
         );
         test.deepEqual(
-            postprocessor.process("@media (hover: hover) { @media (orientation: landscape) { .foobar { display: none; } } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media (hover: hover) { @media (orientation: landscape) { .foobar { display: none; } } }").css,
             "@media (orientation: landscape) {\n    PREFIX>.foobar {\n        display: none;\n    }\n}"
         );
         test.deepEqual(
-            postprocessor.process("@media (hover: hover) { @media screen (orientation: landscape) { .foobar { display: none; } } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media (hover: hover) { @media screen (orientation: landscape) { .foobar { display: none; } } }").css,
             "@media screen (orientation: landscape) {\n    PREFIX>.foobar {\n        display: none;\n    }\n}"
         );
         test.done();
@@ -124,7 +124,7 @@ exports.mq4HoverShim = {
     'handles applicable media types': function (test) {
         test.expect(1);
         test.deepEqual(
-            postprocessor.process("@media screen (hover: hover) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media screen (hover: hover) { .foobar { display: none; } }").css,
             "@media screen { PREFIX>.foobar { display: none; } }"
         );
         test.done();
@@ -132,7 +132,7 @@ exports.mq4HoverShim = {
     'handles non-applicable media types': function (test) {
         test.expect(1);
         test.deepEqual(
-            postprocessor.process("@media print (hover: hover) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media print (hover: hover) { .foobar { display: none; } }").css,
             ""
         );
         test.done();
@@ -141,7 +141,7 @@ exports.mq4HoverShim = {
         test.expect(1);
         test.throws(function () {
             /*eslint-disable no-unused-expressions */
-            postprocessor.process("@media (hover: hover) { .foobar { display: none; } }", {}).css;// jshint ignore:line
+            postprocessor({}).process("@media (hover: hover) { .foobar { display: none; } }").css;// jshint ignore:line
             /*eslint-enable no-unused-expressions */
         }, Error, 'hoverSelectorPrefix option must be a string');
         test.done();
@@ -150,7 +150,7 @@ exports.mq4HoverShim = {
         test.expect(1);
         test.throws(function () {
             /*eslint-disable no-unused-expressions */
-            postprocessor.process("@media (hover: hover) { .foobar { display: none; } }", {hoverSelectorPrefix: 42}).css;// jshint ignore:line
+            postprocessor({hoverSelectorPrefix: 42}).process("@media (hover: hover) { .foobar { display: none; } }").css;// jshint ignore:line
             /*eslint-enable no-unused-expressions */
         }, Error, 'hoverSelectorPrefix option must be a string');
         test.done();

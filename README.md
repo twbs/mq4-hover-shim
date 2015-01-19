@@ -99,7 +99,13 @@ Unofficially supported:
 ## API
 ### Node.js module; CSS postprocessor
 The npm module has the following properties:
-* `postprocessor` - CSS postprocessor that transforms the source CSS as described above. A [PostCSS](https://github.com/postcss/postcss) processor object (that was returned from a call to the `postcss()` function). It requires that a `hoverSelectorPrefix` string option be provided; this string will be prepended to all selectors within `@media (hover: hover) {...}` blocks within the source CSS.
+* `postprocessorFor`
+  * Arguments: an options object with one property:
+    * `hoverSelectorPrefix` - This string will be prepended to all selectors within `@media (hover: hover) {...}` blocks within the source CSS.
+      * Type: `string`
+  * Side-effects: none
+  * Return type: A [PostCSS](https://github.com/postcss/postcss) processor object (that was returned from a call to the `postcss()` function).
+  * Returns a CSS postprocessor that transforms the source CSS as described above.
 * `featureDetector` - Each of this object's properties is a string filepath to a JavaScript file containing the browser-side feature detector in a particular JavaScript module format.
   * `es6` - [ECMAScript 6 module](http://www.2ality.com/2014/09/es6-modules-final.html) format (this is the original from which the other versions are generated)
   * `cjs` - [CommonJS](http://wiki.commonjs.org/wiki/Modules/1.1) module format
@@ -143,6 +149,7 @@ _Also, please don't edit files in the `dist` subdirectory as they are generated 
 ## Release History
 See the [GitHub Releases page](https://github.com/cvrebert/mq4-hover-hover-shim/releases) for detailed changelogs.
 * (next release) - `master`
+* 2015-01-18 - v0.0.4: Fix crash when CSS contains a media-type-only media query. Replaced `postprocessor` with `postprocessorFor()`.
 * 2015-01-14 - v0.0.3: Add jspm metadata. Improve docs.
 * 2015-01-09 - v0.0.2: Many improvements. jQuery is now a dependency on the client side.
 * 2014-12-31 - v0.0.1: Initial release
