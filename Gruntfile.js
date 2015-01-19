@@ -56,6 +56,9 @@ module.exports = function (grunt) {
             }
         },
         jscs: {
+            options: {
+                esnext: true
+            },
             gruntfile: {
                 src: '<%= jshint.gruntfile.src %>'
             },
