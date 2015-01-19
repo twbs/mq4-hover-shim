@@ -12,21 +12,27 @@ var postcss = require('postcss');
 var mediaQuery = require('css-mediaquery');
 
 
-// Checks whether the at-rule is: @media (hover: hover) {...}
-function isSimpleMediaHoverHover(atRule) {
+// Returns media type iff the at-rule is: @media optional-media-type (hover: hover) {...}
+function mediaTypeIfSimpleHoverHover(atRule) {
     var mediaOrs = mediaQuery.parse(atRule.params);
-    if (mediaOrs.length > 1) {
+    if (mediaOrs.length !== 1) {
         return false;
     }
     var mediaAnds = mediaOrs[0];
     if (mediaAnds.inverse) {
         return false;
     }
-    if (mediaAnds.expressions.length > 1) {
+    if (mediaAnds.expressions.length !== 1) {
         return false;
     }
+
     var mediaExpr = mediaAnds.expressions[0];
-    return mediaExpr.feature === 'hover' && mediaExpr.value === 'hover';
+    if (mediaExpr.feature === 'hover' && mediaExpr.value === 'hover') {
+        return mediaAnds.type;
+    }
+    else {
+        return undefined;
+    }
 }
 
 function replaceWithItsChildren(atRule) {
@@ -69,14 +75,39 @@ module.exports = postcss(function process(css, opts) {
     }
 
     css.eachAtRule('media', function (atRule) {
-        if (!isSimpleMediaHoverHover(atRule)) {
-            return;
+        var mediaType = mediaTypeIfSimpleHoverHover(atRule);
+        switch (mediaType) {
+            case 'all':
+                /* falls through */
+            case 'screen': {
+                atRule.eachRule(function (rule) {
+                    prefixSelectorsWith(rule, hoverSelectorPrefix);
+                });
+                if (mediaType === 'screen') {
+                    atRule.params = 'screen';
+                }
+                else {
+                    // Remove tautological @media all {...} wrapper
+                    replaceWithItsChildren(atRule);
+                }
+                return;
+            }
+
+            case 'print':
+                /* falls through */
+            case 'speech': {
+                // These media types never support hovering
+                // Delete always-false media query
+                atRule.removeSelf();
+                return;
+            }
+
+            case undefined: {
+                return; // Media query irrelevant or too complicated
+            }
+            default: {
+                return; // Deprecated media type; take no action.
+            }
         }
-
-        atRule.eachRule(function (rule) {
-            prefixSelectorsWith(rule, hoverSelectorPrefix);
-        });
-
-        replaceWithItsChildren(atRule);
     });
 });

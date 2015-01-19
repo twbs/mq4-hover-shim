@@ -41,19 +41,35 @@ exports.mq4HoverShim = {
         );
         test.done();
     },
-    'skips media queries with ORs': function (test) {
+    'skips media queries with only a media type': function (test) {
         test.expect(1);
+        test.deepEqual(
+           postprocessor.process("@media screen { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+           "@media screen { .foobar { display: none; } }"
+        );
+        test.done();
+    },
+    'skips media queries with ORs': function (test) {
+        test.expect(2);
         test.deepEqual(
             postprocessor.process("@media (hover: hover), (orientation: landscape) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
             "@media (hover: hover), (orientation: landscape) { .foobar { display: none; } }"
         );
+        test.deepEqual(
+            postprocessor.process("@media screen (hover: hover), (orientation: landscape) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            "@media screen (hover: hover), (orientation: landscape) { .foobar { display: none; } }"
+        );
         test.done();
     },
     'skips media queries with ANDs': function (test) {
-        test.expect(1);
+        test.expect(2);
         test.deepEqual(
             postprocessor.process("@media (hover: hover) and (orientation: landscape) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
             "@media (hover: hover) and (orientation: landscape) { .foobar { display: none; } }"
+        );
+        test.deepEqual(
+            postprocessor.process("@media screen (hover: hover) and (orientation: landscape) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            "@media screen (hover: hover) and (orientation: landscape) { .foobar { display: none; } }"
         );
         test.done();
     },
@@ -86,14 +102,38 @@ exports.mq4HoverShim = {
         test.done();
     },
     'handles nested at-rules': function (test) {
-        test.expect(2);
+        test.expect(4);
         test.deepEqual(
             postprocessor.process("@media (orientation: landscape) { @media (hover: hover) { .foobar { display: none; } } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
             "@media (orientation: landscape) { PREFIX>.foobar { display: none; } }"
         );
         test.deepEqual(
+            postprocessor.process("@media screen (orientation: landscape) { @media (hover: hover) { .foobar { display: none; } } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            "@media screen (orientation: landscape) { PREFIX>.foobar { display: none; } }"
+        );
+        test.deepEqual(
             postprocessor.process("@media (hover: hover) { @media (orientation: landscape) { .foobar { display: none; } } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
             "@media (orientation: landscape) {\n    PREFIX>.foobar {\n        display: none;\n    }\n}"
+        );
+        test.deepEqual(
+            postprocessor.process("@media (hover: hover) { @media screen (orientation: landscape) { .foobar { display: none; } } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            "@media screen (orientation: landscape) {\n    PREFIX>.foobar {\n        display: none;\n    }\n}"
+        );
+        test.done();
+    },
+    'handles applicable media types': function (test) {
+        test.expect(1);
+        test.deepEqual(
+            postprocessor.process("@media screen (hover: hover) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            "@media screen { PREFIX>.foobar { display: none; } }"
+        );
+        test.done();
+    },
+    'handles non-applicable media types': function (test) {
+        test.expect(1);
+        test.deepEqual(
+            postprocessor.process("@media print (hover: hover) { .foobar { display: none; } }", {hoverSelectorPrefix: 'PREFIX>'}).css,
+            ""
         );
         test.done();
     },
