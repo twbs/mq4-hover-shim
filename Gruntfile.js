@@ -20,6 +20,7 @@ module.exports = function (grunt) {
 
         '6to5': {
             options: {
+                loose: ['es6.modules'],
                 modules: "common" // output a CommonJS module
             },
             dist: {
