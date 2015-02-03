@@ -13,7 +13,7 @@ module.exports = function (grunt) {
         banner: (
             "/*!\n * mq4-hover-hover-shim v<%= pkg.version %>\n" +
             " * <%= pkg.homepage %>\n" +
-            " * Copyright (c) 2014 Christopher Rebert\n" +
+            " * Copyright (c) 2014-2015 Christopher Rebert\n" +
             " * Licensed under the MIT License (https://github.com/cvrebert/mq4-hover-hover-shim/blob/master/LICENSE).\n" +
             " */\n"
         ),
