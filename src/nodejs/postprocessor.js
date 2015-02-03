@@ -2,7 +2,7 @@
 /*!
  * Postprocessor for shimming @media (hover: hover) from Media Queries Level 4
  * https://github.com/cvrebert/mq4-hover-hover-shim
- * Copyright 2014 Christopher Rebert
+ * Copyright 2014-2015 Christopher Rebert
  * Licensed under MIT (https://github.com/cvrebert/mq4-hover-hover-shim/blob/master/LICENSE.txt)
  */
 
