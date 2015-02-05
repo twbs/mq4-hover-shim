@@ -1,8 +1,8 @@
-# mq4-hover-hover-shim
-[![NPM version](https://badge.fury.io/js/mq4-hover-hover-shim.svg)](http://badge.fury.io/js/mq4-hover-hover-shim)
-[![Build Status](https://img.shields.io/travis/cvrebert/mq4-hover-hover-shim/master.svg)](https://travis-ci.org/cvrebert/mq4-hover-hover-shim)
-[![Dependency Status](https://david-dm.org/cvrebert/mq4-hover-hover-shim.svg)](https://david-dm.org/cvrebert/mq4-hover-hover-shim)
-[![devDependency Status](https://david-dm.org/cvrebert/mq4-hover-hover-shim/dev-status.svg)](https://david-dm.org/cvrebert/mq4-hover-hover-shim#info=devDependencies)
+# mq4-hover-shim
+[![NPM version](https://badge.fury.io/js/mq4-hover-shim.svg)](http://badge.fury.io/js/mq4-hover-shim)
+[![Build Status](https://img.shields.io/travis/twbs/mq4-hover-shim/master.svg)](https://travis-ci.org/twbs/mq4-hover-shim)
+[![Dependency Status](https://david-dm.org/twbs/mq4-hover-shim.svg)](https://david-dm.org/twbs/mq4-hover-shim)
+[![devDependency Status](https://david-dm.org/twbs/mq4-hover-shim/dev-status.svg)](https://david-dm.org/twbs/mq4-hover-shim#info=devDependencies)
 
 A shim for the [Media Queries Level 4 `hover` @media feature](http://drafts.csswg.org/mediaqueries/#hover).
 
@@ -40,8 +40,8 @@ Obviously, this requires JavaScript to be enabled in the browser, and would defa
 
 ## Installation
 
-* Via npm: `npm install mq4-hover-hover-shim`
-* Via jspm: `jspm install mq4-hover-hover-shim`
+* Via npm: `npm install mq4-hover-shim`
+* Via jspm: `jspm install mq4-hover-shim`
 
 ## Client-side dependencies
 
@@ -54,10 +54,10 @@ The browser-side portion of the shim depends on jQuery for firing events.
 The following is a summary of the results of testing the library in various browsers. [Try out the Live Testcase](http://jsbin.com/xekahi/1).
 
 Legend:
-* True positive - Browser supports real hovering, and mq4-hover-hover-shim reports that it supports real hovering
-* True negative - Browser does NOT support real hovering, and mq4-hover-hover-shim reports that it does NOT support real hovering
-* False negative - Browser supports real hovering, and mq4-hover-hover-shim reports that it does NOT support real hovering
-* False positive - Browser does NOT supports real hovering, and mq4-hover-hover-shim reports that it supports real hovering
+* True positive - Browser supports real hovering, and mq4-hover-shim reports that it supports real hovering
+* True negative - Browser does NOT support real hovering, and mq4-hover-shim reports that it does NOT support real hovering
+* False negative - Browser supports real hovering, and mq4-hover-shim reports that it does NOT support real hovering
+* False positive - Browser does NOT supports real hovering, and mq4-hover-shim reports that it supports real hovering
 * ??? - This case has yet to be tested.
 * Desktop - has a pointing device that supports true hovering (e.g. mouse, trackball, trackpad, joystick, http://xkcd.com/243/); lacks a touch-based pointing input device
 * [Laplet](http://en.wikipedia.org/wiki/Laplet) - has both a pointing device that supports true hovering and a touch-based pointing input device
@@ -115,9 +115,9 @@ The npm module has the following properties:
 
 ### Browser-side feature detector
 The browser-side feature detector is available in the following module formats:
-* [ECMAScript 6](https://github.com/lukehoban/es6features#modules): [`/src/browser/mq4-hover-hover-shim.js`](https://github.com/cvrebert/mq4-hover-hover-shim/blob/master/src/browser/mq4-hover-hover-shim.js)
-* Raw [CommonJS](http://wiki.commonjs.org/wiki/Modules/1.1): [`/dist/cjs/mq4-hover-hover-shim.js`](https://github.com/cvrebert/mq4-hover-hover-shim/blob/master/dist/cjs/mq4-hover-hover-shim.js)
-* [UMD (Universal Module Definition)](https://github.com/umdjs/umd) with global fallback: [`/dist/browser/mq4-hover-hover-shim.js`](https://github.com/cvrebert/mq4-hover-hover-shim/blob/master/dist/browser/mq4-hover-hover-shim.js)
+* [ECMAScript 6](https://github.com/lukehoban/es6features#modules): [`/src/browser/mq4-hover-shim.js`](https://github.com/twbs/mq4-hover-shim/blob/master/src/browser/mq4-hover-shim.js)
+* Raw [CommonJS](http://wiki.commonjs.org/wiki/Modules/1.1): [`/dist/cjs/mq4-hover-shim.js`](https://github.com/twbs/mq4-hover-shim/blob/master/dist/cjs/mq4-hover-shim.js)
+* [UMD (Universal Module Definition)](https://github.com/umdjs/umd) with global fallback: [`/dist/browser/mq4-hover-shim.js`](https://github.com/twbs/mq4-hover-shim/blob/master/dist/browser/mq4-hover-shim.js)
   * When this is used in a non-AMD non-CommonJS context, the module will be exported as a `mq4HoverShim` property on the global `window` object.
 
 The module exports one public function:
@@ -141,7 +141,7 @@ The module has one public event:
       * Value: Same as `supportsTrueHover()`'s return value at the time of firing the event
 
 ## Grunt
-Use [grunt-postcss](https://github.com/nDmitry/grunt-postcss) to invoke the mq4-hover-hover-shim CSS postprocessor via [Grunt](http://gruntjs.com/) task.
+Use [grunt-postcss](https://github.com/nDmitry/grunt-postcss) to invoke the mq4-hover-shim CSS postprocessor via [Grunt](http://gruntjs.com/) task.
 
 ## Contributing
 The project's coding style is laid out in the JSHint, ESLint, and JSCS configurations. Add unit tests when changing the CSS postprocessor. Lint and test your code using [Grunt](http://gruntjs.com/). Manually test any changes to the browser-side portion of the shim.
@@ -149,7 +149,7 @@ The project's coding style is laid out in the JSHint, ESLint, and JSCS configura
 _Also, please don't edit files in the `dist` subdirectory as they are generated via Grunt. You'll find source code in the `src` subdirectory!_
 
 ## Release History
-See the [GitHub Releases page](https://github.com/cvrebert/mq4-hover-hover-shim/releases) for detailed changelogs.
+See the [GitHub Releases page](https://github.com/twbs/mq4-hover-shim/releases) for detailed changelogs.
 * (next release) - `master`
 * 2015-01-18 - v0.0.4: Fix crash when CSS contains a media-type-only media query. Replaced `postprocessor` with `postprocessorFor()`.
 * 2015-01-14 - v0.0.3: Add jspm metadata. Improve docs.

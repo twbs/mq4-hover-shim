@@ -1,13 +1,13 @@
 {
-  "name": "mq4-hover-hover-shim",
-  "version": "0.0.4",
+  "name": "mq4-hover-shim",
+  "version": "0.1.0",
   "description": "A shim for the Media Queries Level 4 `hover` @media feature",
   "scripts": {
     "test": "grunt test"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cvrebert/mq4-hover-hover-shim.git"
+    "url": "https://github.com/twbs/mq4-hover-shim.git"
   },
   "keywords": [
     "media",
@@ -28,9 +28,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cvrebert/mq4-hover-hover-shim/issues"
+    "url": "https://github.com/twbs/mq4-hover-shim/issues"
   },
-  "homepage": "https://github.com/cvrebert/mq4-hover-hover-shim",
+  "homepage": "https://github.com/twbs/mq4-hover-shim",
   "dependencies": {
     "css-mediaquery": "^0.1.2",
     "postcss": "^4.0.0"
@@ -57,6 +57,6 @@
     "dependencies": {
       "jquery": ">=1.11.2"
     },
-    "main": "dist/cjs/mq4-hover-hover-shim"
+    "main": "dist/cjs/mq4-hover-shim"
   }
 }

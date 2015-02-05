@@ -11,10 +11,10 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         banner: (
-            "/*!\n * mq4-hover-hover-shim v<%= pkg.version %>\n" +
+            "/*!\n * mq4-hover-shim v<%= pkg.version %>\n" +
             " * <%= pkg.homepage %>\n" +
             " * Copyright (c) 2014-2015 Christopher Rebert\n" +
-            " * Licensed under the MIT License (https://github.com/cvrebert/mq4-hover-hover-shim/blob/master/LICENSE).\n" +
+            " * Licensed under the MIT License (https://github.com/twbs/mq4-hover-shim/blob/master/LICENSE).\n" +
             " */\n"
         ),
 
@@ -61,7 +61,7 @@ module.exports = function (grunt) {
                 src: '<%= jshint.gruntfile.src %>'
             },
             lib: {
-                src: ['src/**/*.js', '!src/browser/mq4-hover-hover-shim.js']
+                src: ['src/**/*.js', '!src/browser/mq4-hover-shim.js']
             },
             test: {
                 src: '<%= jshint.test.src %>'
