@@ -61,7 +61,7 @@ module.exports = function (grunt) {
                 src: '<%= jshint.gruntfile.src %>'
             },
             lib: {
-                src: ['src/**/*.js', '!src/browser/mq4-hover-shim.js']
+                src: ['src/**/*.js']
             },
             test: {
                 src: '<%= jshint.test.src %>'
