@@ -18,7 +18,7 @@ module.exports = function (grunt) {
             " */\n"
         ),
 
-        '6to5': {
+        babel: {
             options: {
                 loose: ['es6.modules'],
                 modules: "common" // output a CommonJS module
@@ -88,7 +88,7 @@ module.exports = function (grunt) {
 
     // Tasks
     grunt.registerTask('lint', ['jshint', 'eslint', 'jscs']);
-    grunt.registerTask('dist', ['6to5', 'browserify']);
+    grunt.registerTask('dist', ['babel', 'browserify']);
     grunt.registerTask('test', ['lint', 'dist', 'nodeunit']);
     grunt.registerTask('default', ['test']);
 };
