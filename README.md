@@ -140,8 +140,9 @@ The module has one public event:
       * Type: `boolean`
       * Value: Same as `supportsTrueHover()`'s return value at the time of firing the event
 
-## Grunt
-Use [grunt-postcss](https://github.com/nDmitry/grunt-postcss) to invoke the mq4-hover-shim CSS postprocessor via [Grunt](http://gruntjs.com/) task.
+## Grunt, Gulp
+* **Grunt**: Use [grunt-postcss](https://github.com/nDmitry/grunt-postcss) to invoke the mq4-hover-shim CSS postprocessor via [Grunt](http://gruntjs.com/) task.
+* **Gulp**: Use [gulp-postcss](https://github.com/w0rm/gulp-postcss) to invoke the mq4-hover-shim CSS postprocessor via [Gulp](http://gulpjs.com/) task.
 
 ## Contributing
 The project's coding style is laid out in the JSHint, ESLint, and JSCS configurations. Add unit tests when changing the CSS postprocessor. Lint and test your code using [Grunt](http://gruntjs.com/). Manually test any changes to the browser-side portion of the shim.
