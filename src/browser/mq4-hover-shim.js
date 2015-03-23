@@ -1,4 +1,4 @@
-/*eslint-env browser */
+/*eslint-env browser, es6 */
 /*eslint no-var:2*/
 /* jshint browser: true, esnext: true */
 /* jshint -W080 */
