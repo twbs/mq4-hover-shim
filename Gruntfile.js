@@ -1,8 +1,7 @@
 /*eslint-env node */
+'use strict';
 
 module.exports = function (grunt) {
-    'use strict';
-
     grunt.util.linefeed = '\n';
 
     require('load-grunt-tasks')(grunt);
