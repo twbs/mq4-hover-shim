@@ -10,9 +10,6 @@
 
 var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { "default": obj }; };
 
-
-
-
 /**
 * Does this UA's primary pointer support true hovering
 * OR does the UA at least not try to quirkily emulate hovering,
@@ -23,7 +20,7 @@ var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? ob
 * @since 0.0.1
 */
 exports.supportsTrueHover = supportsTrueHover;
-/*eslint-env browser */
+/*eslint-env browser, es6 */
 /*eslint no-var:2*/
 /* jshint browser: true, esnext: true */
 /* jshint -W080 */
@@ -85,7 +82,7 @@ function triggerEvent() {
     var HOVER_HOVER = "(hover: hover),(-moz-hover: hover),(-ms-hover: hover),(-webkit-hover: hover)";
     if (window.matchMedia("" + HOVER_NONE + "," + HOVER_ON_DEMAND + "," + HOVER_HOVER).matches) {
         // Browser understands the `hover` media feature
-        var hoverCallback = function (mql) {
+        var hoverCallback = function hoverCallback(mql) {
             var doesMatch = mql.matches;
             if (doesMatch !== canTrulyHover) {
                 canTrulyHover = doesMatch;
