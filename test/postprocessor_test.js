@@ -56,8 +56,8 @@ exports.mq4HoverShim = {
             "@media (hover: hover), (orientation: landscape) { .foobar { display: none; } }"
         );
         test.deepEqual(
-            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media screen (hover: hover), (orientation: landscape) { .foobar { display: none; } }").css,
-            "@media screen (hover: hover), (orientation: landscape) { .foobar { display: none; } }"
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media screen and (hover: hover), screen and (orientation: landscape) { .foobar { display: none; } }").css,
+            "@media screen and (hover: hover), screen and (orientation: landscape) { .foobar { display: none; } }"
         );
         test.done();
     },
@@ -68,8 +68,8 @@ exports.mq4HoverShim = {
             "@media (hover: hover) and (orientation: landscape) { .foobar { display: none; } }"
         );
         test.deepEqual(
-            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media screen (hover: hover) and (orientation: landscape) { .foobar { display: none; } }").css,
-            "@media screen (hover: hover) and (orientation: landscape) { .foobar { display: none; } }"
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media screen and (hover: hover) and (orientation: landscape) { .foobar { display: none; } }").css,
+            "@media screen and (hover: hover) and (orientation: landscape) { .foobar { display: none; } }"
         );
         test.done();
     },
@@ -108,23 +108,23 @@ exports.mq4HoverShim = {
             "@media (orientation: landscape) { PREFIX>.foobar { display: none; } }"
         );
         test.deepEqual(
-            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media screen (orientation: landscape) { @media (hover: hover) { .foobar { display: none; } } }").css,
-            "@media screen (orientation: landscape) { PREFIX>.foobar { display: none; } }"
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media screen and (orientation: landscape) { @media (hover: hover) { .foobar { display: none; } } }").css,
+            "@media screen and (orientation: landscape) { PREFIX>.foobar { display: none; } }"
         );
         test.deepEqual(
             postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media (hover: hover) { @media (orientation: landscape) { .foobar { display: none; } } }").css,
             "@media (orientation: landscape) {\n    PREFIX>.foobar {\n        display: none;\n    }\n}"
         );
         test.deepEqual(
-            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media (hover: hover) { @media screen (orientation: landscape) { .foobar { display: none; } } }").css,
-            "@media screen (orientation: landscape) {\n    PREFIX>.foobar {\n        display: none;\n    }\n}"
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media (hover: hover) { @media screen and (orientation: landscape) { .foobar { display: none; } } }").css,
+            "@media screen and (orientation: landscape) {\n    PREFIX>.foobar {\n        display: none;\n    }\n}"
         );
         test.done();
     },
     'handles applicable media types': function (test) {
         test.expect(1);
         test.deepEqual(
-            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media screen (hover: hover) { .foobar { display: none; } }").css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media screen and (hover: hover) { .foobar { display: none; } }").css,
             "@media screen { PREFIX>.foobar { display: none; } }"
         );
         test.done();
@@ -132,7 +132,7 @@ exports.mq4HoverShim = {
     'handles non-applicable media types': function (test) {
         test.expect(1);
         test.deepEqual(
-            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media print (hover: hover) { .foobar { display: none; } }").css,
+            postprocessor({hoverSelectorPrefix: 'PREFIX>'}).process("@media print and (hover: hover) { .foobar { display: none; } }").css,
             ""
         );
         test.done();
