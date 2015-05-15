@@ -9,12 +9,12 @@
 'use strict';
 
 var postcss = require('postcss');
-var mediaQuery = require('css-mediaquery');
+var parseMediaQuery = require('css-mq-parser');
 
 
 // Returns media type iff the at-rule is: @media optional-media-type (hover: hover) {...}
 function mediaTypeIfSimpleHoverHover(atRule) {
-    var mediaOrs = mediaQuery.parse(atRule.params);
+    var mediaOrs = parseMediaQuery(atRule.params);
     if (mediaOrs.length !== 1) {
         return false;
     }
