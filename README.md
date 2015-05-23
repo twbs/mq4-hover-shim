@@ -1,6 +1,7 @@
 # mq4-hover-shim
 [![NPM version](https://badge.fury.io/js/mq4-hover-shim.svg)](http://badge.fury.io/js/mq4-hover-shim)
 [![Build Status](https://img.shields.io/travis/twbs/mq4-hover-shim/master.svg)](https://travis-ci.org/twbs/mq4-hover-shim)
+![Development Status :: 4 - Beta](https://img.shields.io/badge/maturity-beta-yellow.svg "Development Status :: 4 - Beta")
 [![MIT License](https://img.shields.io/npm/l/mq4-hover-shim.svg)](https://github.com/twbs/mq4-hover-shim/blob/master/LICENSE.txt)
 [![Dependency Status](https://david-dm.org/twbs/mq4-hover-shim.svg)](https://david-dm.org/twbs/mq4-hover-shim)
 [![devDependency Status](https://david-dm.org/twbs/mq4-hover-shim/dev-status.svg)](https://david-dm.org/twbs/mq4-hover-shim#info=devDependencies)
