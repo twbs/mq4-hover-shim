@@ -1,4 +1,4 @@
-/*eslint-env node */
+/* eslint-env node */
 /*!
  * Postprocessor for shimming @media (hover: hover) from Media Queries Level 4
  * https://github.com/twbs/mq4-hover-shim
