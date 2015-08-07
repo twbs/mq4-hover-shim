@@ -1,4 +1,4 @@
-/*eslint-env node */
+/* eslint-env node */
 'use strict';
 
 var postprocessor = require('../src/nodejs/postprocessor.js');
@@ -140,18 +140,18 @@ exports.mq4HoverShim = {
     'errors when hoverSelectorPrefix is not provided': function (test) {
         test.expect(1);
         test.throws(function () {
-            /*eslint-disable no-unused-expressions */
+            /* eslint-disable no-unused-expressions */
             postprocessor({}).process("@media (hover: hover) { .foobar { display: none; } }").css;// jshint ignore:line
-            /*eslint-enable no-unused-expressions */
+            /* eslint-enable no-unused-expressions */
         }, Error, 'hoverSelectorPrefix option must be a string');
         test.done();
     },
     'errors when hoverSelectorPrefix is not a string': function (test) {
         test.expect(1);
         test.throws(function () {
-            /*eslint-disable no-unused-expressions */
+            /* eslint-disable no-unused-expressions */
             postprocessor({hoverSelectorPrefix: 42}).process("@media (hover: hover) { .foobar { display: none; } }").css;// jshint ignore:line
-            /*eslint-enable no-unused-expressions */
+            /* eslint-enable no-unused-expressions */
         }, Error, 'hoverSelectorPrefix option must be a string');
         test.done();
     }
