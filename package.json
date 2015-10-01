@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/twbs/mq4-hover-shim",
   "dependencies": {
-    "css-mq-parser": "^0.0.2",
+    "css-mq-parser": "^0.0.3",
     "postcss": "^5.0.8"
   },
   "devDependencies": {
