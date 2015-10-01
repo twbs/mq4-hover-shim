@@ -39,7 +39,7 @@ function replaceWithItsChildren(atRule) {
     atRule.each(function (child) {
         child.moveBefore(atRule);
     });
-    atRule.removeSelf();
+    atRule.remove();
 }
 
 // Prefixes each selector in the given rule with the given prefix string
@@ -99,7 +99,7 @@ module.exports = function (opts) {
                 case 'speech': {
                     // These media types never support hovering
                     // Delete always-false media query
-                    atRule.removeSelf();
+                    atRule.remove();
                     return;
                 }
 
