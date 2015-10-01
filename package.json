@@ -1,6 +1,6 @@
 {
   "name": "mq4-hover-shim",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A shim for the Media Queries Level 4 `hover` @media feature",
   "scripts": {
     "test": "grunt test"
