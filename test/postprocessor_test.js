@@ -1,4 +1,5 @@
 /* eslint-env node */
+/* eslint object-shorthand:0 */
 'use strict';
 
 var postprocessor = require('../src/nodejs/postprocessor.js');
