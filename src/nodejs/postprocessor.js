@@ -39,7 +39,7 @@ function replaceWithItsChildren(atRule) {
     atRule.each(function (child) {
         child.moveBefore(atRule);
     });
-    atRule.removeSelf();
+    atRule.remove();
 }
 
 // Prefixes each selector in the given rule with the given prefix string
@@ -75,13 +75,13 @@ module.exports = function (opts) {
             throw new Error('hoverSelectorPrefix option must be a string');
         }
 
-        css.eachAtRule('media', function (atRule) {
+        css.walkAtRules('media', function (atRule) {
             var mediaType = mediaTypeIfSimpleHoverHover(atRule);
             switch (mediaType) {
                 case 'all':
                     /* falls through */
                 case 'screen': {
-                    atRule.eachRule(function (rule) {
+                    atRule.walkRules(function (rule) {
                         prefixSelectorsWith(rule, hoverSelectorPrefix);
                     });
                     if (mediaType === 'screen') {
@@ -99,7 +99,7 @@ module.exports = function (opts) {
                 case 'speech': {
                     // These media types never support hovering
                     // Delete always-false media query
-                    atRule.removeSelf();
+                    atRule.remove();
                     return;
                 }
 
