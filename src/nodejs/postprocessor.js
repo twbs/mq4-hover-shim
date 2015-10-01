@@ -75,7 +75,7 @@ module.exports = function (opts) {
             throw new Error('hoverSelectorPrefix option must be a string');
         }
 
-        css.eachAtRule('media', function (atRule) {
+        css.walkAtRules('media', function (atRule) {
             var mediaType = mediaTypeIfSimpleHoverHover(atRule);
             switch (mediaType) {
                 case 'all':
