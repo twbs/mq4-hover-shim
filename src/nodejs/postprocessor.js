@@ -81,7 +81,7 @@ module.exports = function (opts) {
                 case 'all':
                     /* falls through */
                 case 'screen': {
-                    atRule.eachRule(function (rule) {
+                    atRule.walkRules(function (rule) {
                         prefixSelectorsWith(rule, hoverSelectorPrefix);
                     });
                     if (mediaType === 'screen') {
