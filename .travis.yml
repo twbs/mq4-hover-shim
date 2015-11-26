@@ -1,6 +1,6 @@
 {
     "language": "node_js",
-    "node_js": ["0.12"],
+    "node_js": ["5"],
     "install": [
         "npm install -g grunt-cli",
         "npm install"
