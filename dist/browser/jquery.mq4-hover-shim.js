@@ -118,7 +118,7 @@ var jQueryLike = (function () {
 
 					// Browser supports touch if it has touch points
 					/* jshint -W018 */
-					canTrulyHover = !((window.navigator.maxTouchPoints || window.navigator.msMaxTouchPoints) > 0);
+					$.canTrulyHover = !((window.navigator.maxTouchPoints || window.navigator.msMaxTouchPoints) > 0);
 					/* jshint +W018 */
 					triggerEvent();
 					return;
