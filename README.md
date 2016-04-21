@@ -16,27 +16,29 @@ NOTE: This shim only adds support for the `hover` value of the `hover` media fea
 
 The shim consists of two parts:
 * A [PostCSS](https://github.com/postcss/postcss)-based server-side CSS postprocessor that rewrites
-```css
-@media (hover: hover) {
-    some-selector {
-        property: value;
-    }
-}
-```
-into
-```css
-some-prefix some-selector {
-    property: value;
-}
-```
-(In normal use-cases, `some-selector` will contain the `:hover` pseudo-class and `some-prefix` will be a specially-named CSS class that will typically be added to the `<html>` element.)
+  
+  ```css
+  @media (hover: hover) {
+      some-selector {
+          property: value;
+      }
+  }
+  ```
+  into
+  ```css
+  some-prefix some-selector {
+      property: value;
+  }
+  ```
+  (In normal use-cases, `some-selector` will contain the `:hover` pseudo-class and `some-prefix` will be a specially-named CSS class that   will typically be added to the `<html>` element.)
 * A client-side JavaScript library that detects whether the user-agent truly supports hovering. When the check returns true, then your code can add the special CSS class to the appropriate element to enable [`:hover`](hover-pseudo) styles; for example:
-```js
-$(document).on('mq4hsChange', function (e) {
-    $(document.documentElement).toggleClass('some-special-class', e.trueHover);
-});
-```
-Obviously, this requires JavaScript to be enabled in the browser, and would default to disabling `:hover` styles when JavaScript is disabled.
+  
+  ```js
+  $(document).on('mq4hsChange', function (e) {
+      $(document.documentElement).toggleClass('some-special-class', e.trueHover);
+  });
+  ```
+  Obviously, this requires JavaScript to be enabled in the browser, and would default to disabling `:hover` styles when JavaScript is   disabled.
 
 [hover-pseudo]: https://developer.mozilla.org/en-US/docs/Web/CSS/:hover
 
