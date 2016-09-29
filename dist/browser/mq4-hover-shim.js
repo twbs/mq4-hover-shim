@@ -1,50 +1,45 @@
 /*!
- * mq4-hover-shim v0.1.0
+ * mq4-hover-shim v0.3.0
  * https://github.com/twbs/mq4-hover-shim
  * Copyright (c) 2014-2015 Christopher Rebert
  * Licensed under the MIT License (https://github.com/twbs/mq4-hover-shim/blob/master/LICENSE).
  */
 
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.mq4HoverShim=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
-
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-exports.__esModule = true;
-
-/**
-* Does this UA's primary pointer support true hovering
-* OR does the UA at least not try to quirkily emulate hovering,
-* such that :hover CSS styles are appropriate?
-* Essentially tries to shim the `@media (hover: hover)` CSS media query feature.
-* @public
-* @returns {boolean}
-* @since 0.0.1
-*/
-exports.supportsTrueHover = supportsTrueHover;
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.mq4HoverShim = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*eslint-env browser, es6 */
 /*eslint no-var:2*/
 /* jshint browser: true, esnext: true */
 /* jshint -W080 */
 /**
 * @module mq4HoverShim
-* @requires jquery
 */
+
+// Patch jQuery's event system to add our custom properties to the
+// jQuery's event object
+'use strict';
+
+exports.__esModule = true;
+exports.supportsTrueHover = supportsTrueHover;
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
 var $ = (function () {
     try {
-        var _import = require('jquery');
+        var _jquery = require('jquery');
 
-        var jQuery = _interopRequireWildcard(_import);
+        var jQuery = _interopRequireWildcard(_jquery);
 
         return jQuery;
     } catch (importErr) {
-        var globaljQuery = window.$ || window.jQuery || window.Zepto;
-        if (!globaljQuery) {
-            throw new Error('mq4HoverShim needs jQuery (or similar)');
-        }
-        return globaljQuery;
+        return window.$ || window.jQuery;
     }
 })();
+
+if ($ && $.event && $.event.fixHooks) {
+    $.event.fixHooks.mq4hsChange = {
+        props: ['bubbles', 'trueHover']
+    };
+}
 
 /** @type {boolean|undefined} */
 var canTrulyHover = undefined;
@@ -54,7 +49,12 @@ var canTrulyHover = undefined;
 * @fires mq4HoverShim#mq4hsChange
 */
 function triggerEvent() {
-    $(document).trigger($.Event('mq4hsChange', { bubbles: false, trueHover: canTrulyHover }));
+    var event = document.createEvent('Event');
+    event.initEvent('mq4hsChange', true, true);
+    event.bubbles = false;
+    event.trueHover = canTrulyHover;
+
+    document.dispatchEvent(event);
 }
 
 // IIFE so we can use `return`s to avoid deeply-nested if-s
@@ -84,7 +84,7 @@ function triggerEvent() {
     var HOVER_NONE = '(hover: none),(-moz-hover: none),(-ms-hover: none),(-webkit-hover: none)';
     var HOVER_ON_DEMAND = '(hover: on-demand),(-moz-hover: on-demand),(-ms-hover: on-demand),(-webkit-hover: on-demand)';
     var HOVER_HOVER = '(hover: hover),(-moz-hover: hover),(-ms-hover: hover),(-webkit-hover: hover)';
-    if (window.matchMedia('' + HOVER_NONE + ',' + HOVER_ON_DEMAND + ',' + HOVER_HOVER).matches) {
+    if (window.matchMedia(HOVER_NONE + ',' + HOVER_ON_DEMAND + ',' + HOVER_HOVER).matches) {
         // Browser understands the `hover` media feature
         var hoverCallback = function hoverCallback(mql) {
             var doesMatch = mql.matches;
@@ -139,8 +139,20 @@ function triggerEvent() {
     canTrulyHover = true;
     triggerEvent();
 })();
+
+/**
+* Does this UA's primary pointer support true hovering
+* OR does the UA at least not try to quirkily emulate hovering,
+* such that :hover CSS styles are appropriate?
+* Essentially tries to shim the `@media (hover: hover)` CSS media query feature.
+* @public
+* @returns {boolean}
+* @since 0.0.1
+*/
+
 function supportsTrueHover() {
     return canTrulyHover;
 }
+
 },{"jquery":undefined}]},{},[1])(1)
 });
