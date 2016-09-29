@@ -4,21 +4,25 @@
 /* jshint -W080 */
 /**
 * @module mq4HoverShim
-* @requires jquery
 */
-let $ = (function () {
+
+// Patch jQuery's event system to add our custom properties to the
+// jQuery's event object
+const $ = (function () {
     try {
         import * as jQuery from 'jquery';
         return jQuery;
     }
     catch (importErr) {
-        const globaljQuery = window.$ || window.jQuery || window.Zepto;
-        if (!globaljQuery) {
-            throw new Error('mq4HoverShim needs jQuery (or similar)');
-        }
-        return globaljQuery;
+        return window.$ || window.jQuery;
     }
 })();
+
+if ($ && $.event && $.event.fixHooks) {
+    $.event.fixHooks.mq4hsChange = {
+        props: ['bubbles', 'trueHover']
+    };
+}
 
 /** @type {boolean|undefined} */
 let canTrulyHover = undefined;
@@ -28,7 +32,12 @@ let canTrulyHover = undefined;
 * @fires mq4HoverShim#mq4hsChange
 */
 function triggerEvent() {
-    $(document).trigger($.Event('mq4hsChange', {bubbles: false, trueHover: canTrulyHover}));
+    const event = document.createEvent('Event');
+    event.initEvent('mq4hsChange', true, true);
+    event.bubbles = false;
+    event.trueHover = canTrulyHover;
+
+    document.dispatchEvent(event);
 }
 
 // IIFE so we can use `return`s to avoid deeply-nested if-s

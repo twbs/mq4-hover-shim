@@ -1,42 +1,37 @@
-'use strict';
-
-var _interopRequireWildcard = function (obj) { return obj && obj.__esModule ? obj : { 'default': obj }; };
-
-exports.__esModule = true;
-
-/**
-* Does this UA's primary pointer support true hovering
-* OR does the UA at least not try to quirkily emulate hovering,
-* such that :hover CSS styles are appropriate?
-* Essentially tries to shim the `@media (hover: hover)` CSS media query feature.
-* @public
-* @returns {boolean}
-* @since 0.0.1
-*/
-exports.supportsTrueHover = supportsTrueHover;
 /*eslint-env browser, es6 */
 /*eslint no-var:2*/
 /* jshint browser: true, esnext: true */
 /* jshint -W080 */
 /**
 * @module mq4HoverShim
-* @requires jquery
 */
+
+// Patch jQuery's event system to add our custom properties to the
+// jQuery's event object
+'use strict';
+
+exports.__esModule = true;
+exports.supportsTrueHover = supportsTrueHover;
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
 var $ = (function () {
     try {
-        var _import = require('jquery');
+        var _jquery = require('jquery');
 
-        var jQuery = _interopRequireWildcard(_import);
+        var jQuery = _interopRequireWildcard(_jquery);
 
         return jQuery;
     } catch (importErr) {
-        var globaljQuery = window.$ || window.jQuery || window.Zepto;
-        if (!globaljQuery) {
-            throw new Error('mq4HoverShim needs jQuery (or similar)');
-        }
-        return globaljQuery;
+        return window.$ || window.jQuery;
     }
 })();
+
+if ($ && $.event && $.event.fixHooks) {
+    $.event.fixHooks.mq4hsChange = {
+        props: ['bubbles', 'trueHover']
+    };
+}
 
 /** @type {boolean|undefined} */
 var canTrulyHover = undefined;
@@ -46,7 +41,12 @@ var canTrulyHover = undefined;
 * @fires mq4HoverShim#mq4hsChange
 */
 function triggerEvent() {
-    $(document).trigger($.Event('mq4hsChange', { bubbles: false, trueHover: canTrulyHover }));
+    var event = document.createEvent('Event');
+    event.initEvent('mq4hsChange', true, true);
+    event.bubbles = false;
+    event.trueHover = canTrulyHover;
+
+    document.dispatchEvent(event);
 }
 
 // IIFE so we can use `return`s to avoid deeply-nested if-s
@@ -76,7 +76,7 @@ function triggerEvent() {
     var HOVER_NONE = '(hover: none),(-moz-hover: none),(-ms-hover: none),(-webkit-hover: none)';
     var HOVER_ON_DEMAND = '(hover: on-demand),(-moz-hover: on-demand),(-ms-hover: on-demand),(-webkit-hover: on-demand)';
     var HOVER_HOVER = '(hover: hover),(-moz-hover: hover),(-ms-hover: hover),(-webkit-hover: hover)';
-    if (window.matchMedia('' + HOVER_NONE + ',' + HOVER_ON_DEMAND + ',' + HOVER_HOVER).matches) {
+    if (window.matchMedia(HOVER_NONE + ',' + HOVER_ON_DEMAND + ',' + HOVER_HOVER).matches) {
         // Browser understands the `hover` media feature
         var hoverCallback = function hoverCallback(mql) {
             var doesMatch = mql.matches;
@@ -131,6 +131,17 @@ function triggerEvent() {
     canTrulyHover = true;
     triggerEvent();
 })();
+
+/**
+* Does this UA's primary pointer support true hovering
+* OR does the UA at least not try to quirkily emulate hovering,
+* such that :hover CSS styles are appropriate?
+* Essentially tries to shim the `@media (hover: hover)` CSS media query feature.
+* @public
+* @returns {boolean}
+* @since 0.0.1
+*/
+
 function supportsTrueHover() {
     return canTrulyHover;
 }
